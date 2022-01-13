@@ -12,7 +12,7 @@ const deleteFav = (idProduct:number) => {
     localStorage.setItem(FAVORITES, JSON.stringify(favorites));
 }
 
-const getAllfav = () => {
+const getAllfav = ():Array<any> => {
     return (localStorage.getItem(FAVORITES) != null) ? JSON.parse(localStorage[FAVORITES]) as Array<any> : [];
 }
 
@@ -27,10 +27,18 @@ const filterFavoritesInProducts = (favs:Array<any>, items:Array<any>):Array<any>
     return output;
 }
 
+const filterFavoriteProduct = (id:number):any => {
+    let favorites = (localStorage.getItem(FAVORITES) != null) ? JSON.parse(localStorage[FAVORITES]) as Array<any> : [];
+    let tempFavorites = favorites.filter( favorite => favorite.id == id);
+    let obj = (tempFavorites.length > 0) ? tempFavorites[0] : {};
+    return obj;
+}
+
 export {
     FAVORITES,
     saveFav,
     deleteFav,
     getAllfav,
-    filterFavoritesInProducts
+    filterFavoritesInProducts,
+    filterFavoriteProduct
 }

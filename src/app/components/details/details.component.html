@@ -1,18 +1,20 @@
+<div class="row bg-titles mb-4">
+    <div class="col-md-4 d-flex align-items-center">
+        <h1>Detalle de Producto</h1>
+    </div>
+</div>
 <div class="row">
-    <div class="col">
-
-        <ng-container *ngIf="product == null">
-            <div class="col">
-                <h1 class="text-center">Cargando producto</h1>
-                <div class="d-flex justify-content-center">
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
+    <ng-container *ngIf="product == null">
+        <div class="col-md-12">
+            <h1 class="text-center">Cargando producto</h1>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
                 </div>
             </div>
-        </ng-container>
-
-
+        </div>
+    </ng-container>
+    <div class="col-md-4 offset-md-4">
         <ng-container *ngIf="product != null">
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="{{product.image}}" alt="{{product.title}}">
@@ -20,12 +22,17 @@
                   <p class="card-title"><strong>Producto:</strong> {{product.title}}</p>
                   <p class=""><strong>Precio:</strong> $ {{product.price}}</p>
                   <p class=""><strong>Categoria:</strong> {{product.category}}</p>
+                  <p class=""><strong>Calificacion:</strong> {{product.rating.rate}}/5</p>
                   <p class=""><strong>Descripcion:</strong> {{product.description}}</p>
                 </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col text-center">
-                            <button class="btn btn-secondary">A favorito</button>
+                            <a class="btn btn-default" [routerLink]="['/products']">Regresar</a>
+                            <button class="btn" (click)="saveFavorite(product)" [ngClass]="product.isFavorite ? 'btn-warning' : 'btn-secondary' ">
+                                <span *ngIf="product.isFavorite">Favorito</span>
+                                <span *ngIf="!product.isFavorite">A favorito</span>
+                            </button>
                         </div>
                     </div>
                 </div>

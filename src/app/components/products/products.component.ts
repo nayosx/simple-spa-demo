@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StoreService } from 'src/app/network/store.service';
 import { saveFav, deleteFav, getAllfav, filterFavoritesInProducts} from 'src/app/helpers/storage.helper';
+import { filterProducts, optionsForFilterProduts } from 'src/app/helpers/filterProducts.helper';
 
 @Component({
   selector: 'app-products',
@@ -10,6 +11,9 @@ import { saveFav, deleteFav, getAllfav, filterFavoritesInProducts} from 'src/app
 export class ProductsComponent implements OnInit {
 
   public products:Array<any> = [];
+  private originalProducts:Array<any> = [];
+
+  public filters:Array<any> = [];
 
   constructor(private productosService:StoreService) { }
   ngOnInit(): void {
@@ -21,8 +25,8 @@ export class ProductsComponent implements OnInit {
     this.productosService.retrieve().subscribe(
       response => {
         this.products = filterFavoritesInProducts(getAllfav(), response.body);
-
-        console.log(this.products);
+        this.originalProducts = this.products.map(product => product);
+        this.filters = optionsForFilterProduts();
       },
       error => {
         console.log('a ocurrido un error');
@@ -32,11 +36,20 @@ export class ProductsComponent implements OnInit {
   }
 
   public saveFavorite(product:any):void {
-    saveFav(product);
     if(product.isFavorite) {
       deleteFav(product.id);
+    } else {
+      product.isFavorite = true;
+      saveFav(product);
     }
     this.products = filterFavoritesInProducts(getAllfav(), this.products);
+  }
+
+  public onChangeFilter(e:any):void {
+    const {value} = e.target;
+    this.products = filterProducts(parseInt(value), this.originalProducts);
+    console.log(this.products);
+    console.log(value);
   }
 
 }

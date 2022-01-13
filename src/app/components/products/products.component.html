@@ -1,28 +1,35 @@
+<div class="row bg-titles mb-4">
+    <div class="col-md-4 d-flex align-items-center">
+        <h1>Productos en oferta</h1>
+    </div>
+</div>
+
 <div class="row">
-    <ng-container *ngIf="products.length > 0">
-        <div class="col-md-4 col-md-offset-4">
-            <div>
-                <form>
-                    <div class="form-group">
-                        <label for="">filtrar:</label>
-                        <select class="form-control form-control-lg">
-                           <option>Large select</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
+    <div class="col-md-4">
+        <div>
+            <form>
+                <div class="form-group">
+                    <label for="">Filtrar producto por: </label>
+                    <select class="form-control form-control-lg" (change)="onChangeFilter($event)">
+                        <option value="0">Seleccione un filtro</option>
+                        <option *ngFor="let item of filters"  [value]="item.id">{{item.value}}</option>
+                    </select>
+                </div>
+            </form>
         </div>
-    </ng-container>
+    </div>
 </div>
 
 <div class="row">
     <ng-container *ngIf="products.length > 0">
-        <div class="col" *ngFor="let product of products">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{product.image}}" alt="{{product.title}}">
+        <div class="col-md-4" *ngFor="let product of products">
+            <div class="card mb-4"ß>
+                <div class="text-center">
+                    <img class="card-img-top img-fluid" style="max-width: 200px;" src="{{product.image}}" alt="{{product.title}}">
+                </div>
                 <div class="card-body">
-                  <h5 class="card-title text-truncate">{{product.title}}</h5>
-                  <h5 class="card-title text-primary"> <strong>Precio:</strong> $ {{product.price}}</h5>
+                    <h5 class="card-title text-truncate">{{product.title}}</h5>
+                    <h5 class="card-title text-primary"> <strong>Precio:</strong> $ {{product.price}}</h5>
                 </div>
                 <div class="card-footer">
                     <div class="row">
@@ -30,7 +37,8 @@
                             <a class="btn btn-primary" [routerLink]="['/detail', product.id]"> Ver detalle</a>
                         </div>
                         <div class="col text-center">
-                            <button class="btn" (click)="saveFavorite(product)" [ngClass]="product.isFavorite ? 'btn-warning' : 'btn-secondary' ">
+                            <button class="btn" (click)="saveFavorite(product)"
+                                [ngClass]="product.isFavorite ? 'btn-warning' : 'btn-secondary' ">
                                 <span *ngIf="product.isFavorite">Favorito</span>
                                 <span *ngIf="!product.isFavorite">A favorito</span>
                             </button>

@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col">
+
+        <ng-container *ngIf="product == null">
+            <div class="col">
+                <h1 class="text-center">Cargando producto</h1>
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <ng-container *ngIf="product != null">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{product.image}}" alt="{{product.title}}">
+                <div class="card-body">
+                  <p class="card-title"><strong>Producto:</strong> {{product.title}}</p>
+                  <p class=""><strong>Precio:</strong> $ {{product.price}}</p>
+                  <p class=""><strong>Categoria:</strong> {{product.category}}</p>
+                  <p class=""><strong>Descripcion:</strong> {{product.description}}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col text-center">
+                            <button class="btn btn-secondary">A favorito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <ng-container *ngIf="isErrorOnId">
+            <h1 class="text-danger">Error al traer los datos</h1>
+        </ng-container>
+
+    </div>
+</div>

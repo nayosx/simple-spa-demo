@@ -1,0 +1,27 @@
+<div class="row">
+    <ng-container *ngIf="products.length > 0">
+        <div class="col" *ngFor="let product of products">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="{{product.image}}" alt="{{product.title}}">
+                <div class="card-body">
+                  <h5 class="card-title text-truncate">{{product.title}}</h5>
+                  <h5 class="card-title text-truncate">$ {{product.price}}</h5>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col text-center">
+                            <button class="btn" (click)="deleteFromFavorites(product)" [ngClass]="product.isFavorite ? 'btn-dangar' : 'btn-secondary' ">
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="products.length == 0">
+        <div class="col">
+            <h1 class="text-center">Productos favoritos</h1>
+        </div>
+    </ng-container>
+</div>
